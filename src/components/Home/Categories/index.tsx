@@ -1,8 +1,7 @@
 "use client";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useCallback, useRef, useEffect } from "react";
-import data from "./categoryData";
-import Image from "next/image";
+import { useGetHomePageCategoriesQuery } from "@/redux/api/categoryApi";
 
 // Import Swiper styles
 import "swiper/css/navigation";
@@ -11,6 +10,8 @@ import SingleItem from "./SingleItem";
 
 const Categories = () => {
   const sliderRef = useRef(null);
+
+  const { data, isLoading, error } = useGetHomePageCategoriesQuery(null);
 
   const handlePrev = useCallback(() => {
     if (!sliderRef.current) return;
@@ -27,6 +28,12 @@ const Categories = () => {
       sliderRef.current.swiper.init();
     }
   }, []);
+
+
+  if (isLoading) return <div>در حال بارگذاری دسته‌بندی‌ها...</div>;
+  if (error) return <div>خطا در دریافت دسته‌بندی‌ها</div>;
+
+  if (!data || !data.data) return null;
 
   return (
     <section className="overflow-hidden pt-17.5">
@@ -134,7 +141,7 @@ const Categories = () => {
               },
             }}
           >
-            {data.map((item, key) => (
+            {data.data.map((item, key) => (
               <SwiperSlide key={key}>
                 <SingleItem item={item} />
               </SwiperSlide>

@@ -4,7 +4,7 @@ import quickViewReducer from "./features/quickView-slice";
 import cartReducer from "./features/cart-slice";
 import wishlistReducer from "./features/wishlist-slice";
 import productDetailsReducer from "./features/product-details";
-
+import { catalogApi } from "./api/categoryApi";
 import { TypedUseSelectorHook, useSelector } from "react-redux";
 
 export const store = configureStore({
@@ -13,7 +13,10 @@ export const store = configureStore({
     cartReducer,
     wishlistReducer,
     productDetailsReducer,
+    [catalogApi.reducerPath]: catalogApi.reducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(catalogApi.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
