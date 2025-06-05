@@ -23,22 +23,22 @@ const ProductItem = ({ item }: { item: Product }) => {
 
   // add to cart
   const handleAddToCart = () => {
-    dispatch(
-      addItemToCart({
-        ...item,
-        quantity: 1,
-      })
-    );
+    // dispatch(
+    //   addItemToCart({
+    //     ...item,
+    //     quantity: 1,
+    //   })
+    // );
   };
 
   const handleItemToWishList = () => {
-    dispatch(
-      addItemToWishlist({
-        ...item,
-        status: "available",
-        quantity: 1,
-      })
-    );
+    // dispatch(
+    //   addItemToWishlist({
+    //     ...item,
+    //     status: "available",
+    //     quantity: 1,
+    //   })
+    // );
   };
 
   const handleProductDetails = () => {
@@ -48,7 +48,11 @@ const ProductItem = ({ item }: { item: Product }) => {
   return (
     <div className="group">
       <div className="relative overflow-hidden flex items-center justify-center rounded-lg bg-[#F6F7FB] min-h-[270px] mb-4">
-        <Image src={item.imgs.previews[0]} alt="" width={250} height={250} />
+        {
+          item.filePath && (
+            <Image src={`${process.env.NEXT_PUBLIC_CATEGORY_IMAGE_BASE_URL}/${item.filePath}`} alt={item.altText} width={250} height={250} />
+          )
+        }
 
         <div className="absolute left-0 bottom-0 translate-y-full w-full flex items-center justify-center gap-2.5 pb-5 ease-linear duration-200 group-hover:translate-y-0">
           <button
@@ -149,19 +153,21 @@ const ProductItem = ({ item }: { item: Product }) => {
           />
         </div>
 
-        <p className="text-custom-sm">({item.reviews})</p>
+        <p className="text-custom-sm">({item.reviewsCount})</p>
       </div>
 
       <h3
         className="font-medium text-dark ease-out duration-200 hover:text-blue mb-1.5"
         onClick={() => handleProductDetails()}
       >
-        <Link href="/shop-details"> {item.title} </Link>
+        <Link href="/shop-details"> {item.name} </Link>
       </h3>
 
       <span className="flex items-center gap-2 font-medium text-lg">
-        <span className="text-dark">${item.discountedPrice}</span>
-        <span className="text-dark-4 line-through">${item.price}</span>
+        {
+          item.salePrice!==item.price &&  <span className="text-dark-4 line-through">{item.price} <span className="text-custom-sm">تومان</span></span>
+        }
+        <span className="text-dark">{item.salePrice} <span className="text-custom-sm">تومان</span></span>
       </span>
     </div>
   );

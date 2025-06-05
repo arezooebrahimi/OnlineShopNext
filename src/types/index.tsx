@@ -6,7 +6,7 @@ export default async function NewArrival() {
   let products = [];
   let error = null;
   const body = {
-    limit: 8,
+    limit: 5,
     offset: 0,
     sort: {
       column: "createdAt",

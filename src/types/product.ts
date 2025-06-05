@@ -1,11 +1,28 @@
+
+export type GetProductsRequest = {
+  limit?: number;
+  offset?: number;
+  sort?: {
+    column: string;
+    order: 'asc' | 'desc';
+  };
+  filters?: Record<string, any>;
+};
+
 export type Product = {
-  title: string;
-  reviews: number;
+  name: string;
+  slug: string;
   price: number;
-  discountedPrice: number;
-  id: number;
-  imgs?: {
-    thumbnails: string[];
-    previews: string[];
+  salePrice: number;
+  raiting: number;
+  reviewsCount: number;
+  filePath: string;
+  altText: string;
+};
+
+export type GetProductsResponse = {
+  data: {
+    items: Product[];
+    total?: number;
   };
 };

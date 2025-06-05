@@ -5,7 +5,7 @@ import Image from "next/image";
 const SingleItem = ({ item }: { item: Category }) => {
   const BASE_IMAGE_URL = process.env.NEXT_PUBLIC_CATEGORY_IMAGE_BASE_URL;
   return (
-    <a href="#" className="group flex flex-col items-center">
+    <a href={`/categories/${item.slug}`} className="group flex flex-col items-center">
       <div className="max-w-[130px] w-full bg-[#F2F3F8] h-32.5 rounded-full flex items-center justify-center mb-4">
         <Image
           src={`${BASE_IMAGE_URL}/${item.filePath}`}

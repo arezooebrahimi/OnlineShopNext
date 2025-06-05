@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 
-const Breadcrumb = ({ title, pages }) => {
+const Breadcrumb = ({ title, pages, desc }) => {
   return (
     <div className="overflow-hidden shadow-breadcrumb pt-[209px] sm:pt-[155px] lg:pt-[95px] xl:pt-[165px]">
       <div className="border-t border-gray-3">
@@ -11,6 +11,7 @@ const Breadcrumb = ({ title, pages }) => {
               {title}
             </h1>
 
+
             <ul className="flex items-center gap-2">
               <li className="text-custom-sm hover:text-blue">
                 <Link href="/">صفحه اصلی /</Link>
@@ -19,11 +20,14 @@ const Breadcrumb = ({ title, pages }) => {
               {pages.length > 0 &&
                 pages.map((page, key) => (
                   <li className="text-custom-sm last:text-blue capitalize" key={key}>
-                    {page} 
+                    {page}
                   </li>
                 ))}
             </ul>
           </div>
+          <p className="text-custom-sm mt-3 text-gray-500">
+            {desc}
+          </p>
         </div>
       </div>
     </div>
