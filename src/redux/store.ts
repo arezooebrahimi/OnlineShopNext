@@ -6,6 +6,7 @@ import wishlistReducer from "./features/wishlist-slice";
 import productDetailsReducer from "./features/product-details";
 import { catalogApi } from "./api/categoryApi";
 import { TypedUseSelectorHook, useSelector } from "react-redux";
+import authApi from "./api/authApi";
 
 export const store = configureStore({
   reducer: {
@@ -14,9 +15,10 @@ export const store = configureStore({
     wishlistReducer,
     productDetailsReducer,
     [catalogApi.reducerPath]: catalogApi.reducer,
-  },
+    [authApi.reducerPath]: authApi.reducer,
+  },  
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(catalogApi.middleware),
+    getDefaultMiddleware().concat(catalogApi.middleware, authApi.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

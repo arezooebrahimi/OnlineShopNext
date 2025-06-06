@@ -9,12 +9,18 @@ import { useSelector } from "react-redux";
 import { selectTotalPrice } from "@/redux/features/cart-slice";
 import { useCartModalContext } from "@/app/context/CartSidebarModalContext";
 import Image from "next/image";
+import { useGetInfoQuery } from "@/redux/api/authApi";
+import { cookieService } from "@/services/cookieService";
 
 const Header = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [navigationOpen, setNavigationOpen] = useState(false);
   const [stickyMenu, setStickyMenu] = useState(false);
   const { openCartModal } = useCartModalContext();
+
+  const { data: userInfo, isLoading } = useGetInfoQuery(cookieService.getCookie('atn'), {
+    skip: !cookieService.hasCookie('atn'),
+  });
 
   const product = useAppSelector((state) => state.cartReducer.items);
   const totalPrice = useSelector(selectTotalPrice);
@@ -184,7 +190,7 @@ const Header = () => {
                       حساب کاربری
                     </span>
                     <p className="font-medium text-custom-sm text-dark">
-                      ورود
+                      {userInfo ? userInfo.data.nameFamily : "ورود"}
                     </p>
                   </div>
                 </Link>
